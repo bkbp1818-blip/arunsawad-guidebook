@@ -1,9 +1,7 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   MapPin,
@@ -25,32 +23,19 @@ const navItems = [
   { href: "/dashboard/phrases", icon: BookOpen, label: "Thai Phrases" },
 ];
 
-export default function AdminLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { data: session, status } = useSession();
-  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
 
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/login");
-    }
-  }, [status, router]);
-
-  if (status === "loading") {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    );
-  }
-
-  if (!session) {
-    return null;
-  }
+  const handleSignOut = async () => {
+    // Use fetch to sign out
+    await fetch("/api/auth/signout", { method: "POST" });
+    window.location.href = "/";
+  };
 
   return (
     <div className="flex min-h-screen bg-muted/30">
@@ -87,29 +72,33 @@ export default function AdminLayout({
 
           {/* Navigation */}
           <nav className="flex-1 space-y-1 p-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                onClick={() => setSidebarOpen(false)}
-              >
-                <item.icon className="h-5 w-5" />
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const isActive = pathname === item.href ||
+                (item.href !== "/dashboard" && pathname.startsWith(item.href));
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-muted hover:text-foreground ${
+                    isActive
+                      ? "bg-primary/10 text-primary font-medium"
+                      : "text-muted-foreground"
+                  }`}
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <item.icon className="h-5 w-5" />
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* User & Logout */}
+          {/* Logout */}
           <div className="border-t border-border p-4">
-            <div className="mb-3 text-sm">
-              <p className="font-medium text-foreground">{session.user?.name}</p>
-              <p className="text-muted-foreground">{session.user?.email}</p>
-            </div>
             <Button
               variant="outline"
               className="w-full justify-start gap-2"
-              onClick={() => signOut({ callbackUrl: "/" })}
+              onClick={handleSignOut}
             >
               <LogOut className="h-4 w-4" />
               Sign Out
