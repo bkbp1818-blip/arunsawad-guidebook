@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Locations (3 สาขา)
+model Location {
+  id              String   @id @default(cuid())
+  slug            String   @unique // "chinatown", "yaowarat", "103-nana"
+  name            String   // "Chinatown", "Yaowarat", "103 NANA"
+  nameThai        String?  // ชื่อภาษาไทย
+  tagline         String?  // "The Authentic Hideaway"
+  description     String?
+  address         String
+  addressThai     String?
+  latitude        Float
+  longitude       Float
+  wifiName        String
+  wifiPassword    String
+  checkInTime     String   @default("14:00")
+  checkOutTime    String   @default("12:00")
+  emergencyPhone  String
+  breakfastInfo   String?
+  houseRules      String?
+  spotifyPlaylist String?
+  imageUrl        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  places          Place[]
+  faqs            FAQ[]
+}
+
+// Places (ร้านอาหาร, คาเฟ่, สถานที่)
+model Place {
+  id             String    @id @default(cuid())
+  name           String
+  nameThai       String?
+  description    String
+  descriptionThai String?
+  address        String
+  latitude       Float
+  longitude      Float
+  category       Category
+  timeOfDay      TimeOfDay
+  tags           String[]
+  priceRange     Int       @default(1) // 1-4 ($ - $$$$)
+  mustTry        String?   // เมนูแนะนำ
+  tips           String?   // เคล็ดลับ
+  imageUrl       String?
+  googleMapsUrl  String?
+  isHostelChoice Boolean   @default(false)
+  isActive       Boolean   @default(true)
+  locationId     String
+  location       Location  @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+enum Category {
+  CAFE
+  STREET_FOOD
+  RESTAURANT
+  BAR
+  CULTURAL
+  MARKET
+  TRANSPORT
+}
+
+enum TimeOfDay {
+  MORNING
+  DAY
+  NIGHT
+  ANYTIME
+}
+
+// FAQ for Chatbot
+model FAQ {
+  id         String    @id @default(cuid())
+  question   String
+  answer     String
+  category   String    // "wifi", "food", "transport", "general"
+  locationId String?
+  location   Location? @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+// Thai Phrases
+model ThaiPhrase {
+  id            String   @id @default(cuid())
+  english       String
+  thai          String
+  pronunciation String
+  category      String   // "greeting", "food", "numbers", "emergency"
+  createdAt     DateTime @default(now())
+}
+
+// Admin User
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  SUPER_ADMIN
+}
