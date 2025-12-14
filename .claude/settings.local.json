@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nFix Vercel build error - exclude prisma from TypeScript check\n\n- Added prisma folder to tsconfig.json exclude array\n- Added postinstall script to auto-generate Prisma client\n- Modified build script to run prisma generate before next build\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(gh api:*)",
+      "Bash(npm run build)"
+    ]
+  }
+}
