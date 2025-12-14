@@ -271,6 +271,107 @@ async function main() {
   }
   console.log(`✅ Created ${phrases.length} Thai phrases`);
 
+  // Create Sample Events
+  const events = [
+    {
+      title: "Movie Night: Thai Cinema",
+      description: "Join us for a classic Thai movie with English subtitles. Popcorn provided!",
+      date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days from now
+      time: "19:00",
+      endTime: "21:30",
+      locationId: yaowarat.id,
+      isActive: true,
+    },
+    {
+      title: "Chinatown Food Tour",
+      description: "Guided walking tour through the best street food spots in Yaowarat. 5 stops, unlimited deliciousness!",
+      date: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), // 4 days from now
+      time: "18:00",
+      endTime: "21:00",
+      locationId: yaowarat.id,
+      isActive: true,
+    },
+    {
+      title: "Rooftop Sunset Drinks",
+      description: "Watch the Bangkok sunset from our rooftop with complimentary welcome drink.",
+      date: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // tomorrow
+      time: "17:30",
+      endTime: "19:00",
+      locationId: nana.id,
+      isActive: true,
+    },
+    {
+      title: "Thai Cooking Class",
+      description: "Learn to make Pad Thai and Tom Yum with our local chef. Ingredients included.",
+      date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
+      time: "14:00",
+      endTime: "17:00",
+      locationId: chinatown.id,
+      isActive: true,
+    },
+  ];
+
+  for (const event of events) {
+    await prisma.event.create({ data: event });
+  }
+  console.log(`✅ Created ${events.length} sample events`);
+
+  // Create Daily Picks
+  const dailyPicks = [
+    {
+      title: "Tonight: Night Market at Yaowarat Road!",
+      description: "The famous Chinatown street food scene is buzzing tonight. Don't miss the seafood!",
+      isActive: true,
+    },
+    {
+      title: "Weekend Special: Free Walking Tour",
+      description: "Join our staff for a free 2-hour walking tour of hidden gems in the neighborhood.",
+      isActive: true,
+    },
+  ];
+
+  for (const pick of dailyPicks) {
+    await prisma.dailyPick.create({ data: pick });
+  }
+  console.log(`✅ Created ${dailyPicks.length} daily picks`);
+
+  // Create Sample Guestbook Entries
+  const guestbookEntries = [
+    {
+      name: "Sarah",
+      country: "Australia",
+      message: "Amazing stay! The staff recommendations for street food were spot on. Will definitely come back!",
+      rating: 5,
+      isApproved: true,
+    },
+    {
+      name: "Marco",
+      country: "Italy",
+      message: "Perfect location for exploring Chinatown. The rooftop is beautiful at sunset.",
+      rating: 5,
+      isApproved: true,
+    },
+    {
+      name: "Yuki",
+      country: "Japan",
+      message: "Very clean and friendly staff. The chatbot Chao was super helpful!",
+      rating: 4,
+      isApproved: true,
+    },
+    {
+      name: "Alex",
+      country: "Germany",
+      message: "Great value for money. Loved the local vibe and the breakfast recommendations.",
+      rating: 5,
+      isApproved: true,
+    },
+  ];
+
+  for (const entry of guestbookEntries) {
+    await prisma.guestbookEntry.create({ data: entry });
+  }
+  console.log(`✅ Created ${guestbookEntries.length} guestbook entries`);
+
   console.log("🎉 Seed completed successfully!");
 }
 

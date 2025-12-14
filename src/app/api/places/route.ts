@@ -6,14 +6,16 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const locationSlug = searchParams.get("location");
     const category = searchParams.get("category");
+    const subcategory = searchParams.get("subcategory");
     const timeOfDay = searchParams.get("timeOfDay");
+    const smartFilter = searchParams.get("filter"); // Eat, Drink, See, Shop
 
     // Build where clause
     const where: Record<string, unknown> = {
       isActive: true,
     };
 
-    if (locationSlug) {
+    if (locationSlug && locationSlug !== "all") {
       const location = await prisma.location.findUnique({
         where: { slug: locationSlug },
         select: { id: true },
@@ -23,8 +25,28 @@ export async function GET(request: Request) {
       }
     }
 
-    if (category && category !== "all") {
+    // Smart filter mapping
+    if (smartFilter && smartFilter !== "all") {
+      switch (smartFilter) {
+        case "eat":
+          where.category = { in: ["STREET_FOOD", "RESTAURANT", "CAFE"] };
+          break;
+        case "drink":
+          where.category = "BAR";
+          break;
+        case "see":
+          where.category = "CULTURAL";
+          break;
+        case "shop":
+          where.category = "MARKET";
+          break;
+      }
+    } else if (category && category !== "all") {
       where.category = category;
+    }
+
+    if (subcategory && subcategory !== "all") {
+      where.subcategory = subcategory;
     }
 
     if (timeOfDay && timeOfDay !== "all") {
@@ -33,6 +55,14 @@ export async function GET(request: Request) {
 
     const places = await prisma.place.findMany({
       where,
+      include: {
+        location: {
+          select: {
+            name: true,
+            slug: true,
+          },
+        },
+      },
       orderBy: [
         { isHostelChoice: "desc" },
         { name: "asc" },

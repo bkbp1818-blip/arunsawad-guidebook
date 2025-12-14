@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, FormEvent } from "react";
 import Link from "next/link";
 import {
   Send,
-  ArrowLeft,
+  ChevronLeft,
   Loader2,
   Sparkles,
   Wifi,
@@ -12,6 +12,11 @@ import {
   MapPin,
   Clock,
   HelpCircle,
+  Beer,
+  Bus,
+  Home,
+  Coffee,
+  Phone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,8 +30,10 @@ interface Message {
 const quickQuestions = [
   { icon: Wifi, text: "What's the WiFi password?", color: "bg-blue-500/10 text-blue-600" },
   { icon: Utensils, text: "Best street food nearby?", color: "bg-orange-500/10 text-orange-600" },
-  { icon: MapPin, text: "How do I get to Grand Palace?", color: "bg-green-500/10 text-green-600" },
-  { icon: Clock, text: "What time is check-out?", color: "bg-purple-500/10 text-purple-600" },
+  { icon: Beer, text: "Recommend a hidden bar?", color: "bg-purple-500/10 text-purple-600" },
+  { icon: MapPin, text: "How to get to Grand Palace?", color: "bg-green-500/10 text-green-600" },
+  { icon: Clock, text: "What time is check-out?", color: "bg-amber-500/10 text-amber-600" },
+  { icon: Bus, text: "How do I use the MRT?", color: "bg-teal-500/10 text-teal-600" },
   { icon: HelpCircle, text: "Any tips for bargaining?", color: "bg-pink-500/10 text-pink-600" },
 ];
 
@@ -127,16 +134,15 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background pb-16">
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-            >
-              <ArrowLeft className="h-5 w-5" />
+            <Link href="/">
+              <Button variant="ghost" size="icon">
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
             </Link>
             <div className="flex items-center gap-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent text-xl">
@@ -250,8 +256,8 @@ export default function ChatPage() {
       </main>
 
       {/* Input Area */}
-      <footer className="sticky bottom-0 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="mx-auto max-w-3xl px-4 py-4">
+      <div className="fixed bottom-16 left-0 right-0 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="mx-auto max-w-3xl px-4 py-3">
           <form onSubmit={handleSubmit} className="flex items-center gap-2">
             <div className="relative flex-1">
               <input
@@ -281,6 +287,28 @@ export default function ChatPage() {
             <Sparkles className="mr-1 inline h-3 w-3" />
             Powered by Claude AI
           </p>
+        </div>
+      </div>
+
+      {/* Bottom Navigation */}
+      <footer className="fixed bottom-0 left-0 right-0 border-t border-border bg-background/95 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-around p-2">
+          <Link href="/" className="flex flex-col items-center p-2 text-muted-foreground hover:text-primary">
+            <Home className="h-5 w-5" />
+            <span className="text-xs">Home</span>
+          </Link>
+          <Link href="/explore" className="flex flex-col items-center p-2 text-muted-foreground hover:text-primary">
+            <MapPin className="h-5 w-5" />
+            <span className="text-xs">Explore</span>
+          </Link>
+          <Link href="/community" className="flex flex-col items-center p-2 text-muted-foreground hover:text-primary">
+            <Coffee className="h-5 w-5" />
+            <span className="text-xs">Community</span>
+          </Link>
+          <Link href="/chat" className="flex flex-col items-center p-2 text-primary">
+            <Phone className="h-5 w-5" />
+            <span className="text-xs">Ask Chao</span>
+          </Link>
         </div>
       </footer>
     </div>

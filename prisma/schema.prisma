@@ -32,6 +32,7 @@ model Location {
   updatedAt       DateTime @updatedAt
   places          Place[]
   faqs            FAQ[]
+  events          Event[]
 }
 
 // Places (ร้านอาหาร, คาเฟ่, สถานที่)
@@ -45,6 +46,7 @@ model Place {
   latitude       Float
   longitude      Float
   category       Category
+  subcategory    String?   // "rooftop_bar", "hidden_bar", "craft_beer", "instagram_spot", etc.
   timeOfDay      TimeOfDay
   tags           String[]
   priceRange     Int       @default(1) // 1-4 ($ - $$$$)
@@ -56,6 +58,7 @@ model Place {
   isActive       Boolean   @default(true)
   locationId     String
   location       Location  @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  dailyPicks     DailyPick[]
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 }
@@ -113,4 +116,44 @@ model User {
 enum Role {
   ADMIN
   SUPER_ADMIN
+}
+
+// Events Calendar (กิจกรรมในโฮสเทล)
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  date        DateTime
+  time        String?   // "19:00"
+  endTime     String?   // "22:00"
+  locationId  String?
+  location    Location? @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  imageUrl    String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Today's Pick (ไฮไลท์ประจำวัน)
+model DailyPick {
+  id          String   @id @default(cuid())
+  title       String   // "คืนนี้มีตลาดกลางคืน!"
+  description String?
+  placeId     String?
+  place       Place?   @relation(fields: [placeId], references: [id], onDelete: SetNull)
+  date        DateTime @default(now())
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Guestbook (สมุดเยี่ยม)
+model GuestbookEntry {
+  id         String   @id @default(cuid())
+  name       String
+  country    String?
+  message    String
+  rating     Int?     // 1-5 stars
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
 }
