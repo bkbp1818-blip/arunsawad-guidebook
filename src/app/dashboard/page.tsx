@@ -45,28 +45,28 @@ export default function AdminDashboard() {
       title: "Locations",
       value: stats.locations,
       icon: MapPin,
-      href: "/admin/locations",
+      href: "/dashboard/locations",
       color: "bg-blue-500/10 text-blue-600",
     },
     {
       title: "Places",
       value: stats.places,
       icon: Utensils,
-      href: "/admin/places",
+      href: "/dashboard/places",
       color: "bg-orange-500/10 text-orange-600",
     },
     {
       title: "FAQs",
       value: stats.faqs,
       icon: HelpCircle,
-      href: "/admin/faqs",
+      href: "/dashboard/faqs",
       color: "bg-green-500/10 text-green-600",
     },
     {
       title: "Thai Phrases",
       value: stats.phrases,
       icon: BookOpen,
-      href: "/admin/phrases",
+      href: "/dashboard/phrases",
       color: "bg-purple-500/10 text-purple-600",
     },
   ];
@@ -113,19 +113,19 @@ export default function AdminDashboard() {
       <div className="mb-8">
         <h2 className="mb-4 font-serif text-lg font-semibold">Quick Actions</h2>
         <div className="flex flex-wrap gap-3">
-          <Link href="/admin/places?new=true">
+          <Link href="/dashboard/places?new=true">
             <Button>
               <Plus className="mr-2 h-4 w-4" />
               Add New Place
             </Button>
           </Link>
-          <Link href="/admin/faqs?new=true">
+          <Link href="/dashboard/faqs?new=true">
             <Button variant="outline">
               <Plus className="mr-2 h-4 w-4" />
               Add FAQ
             </Button>
           </Link>
-          <Link href="/admin/phrases?new=true">
+          <Link href="/dashboard/phrases?new=true">
             <Button variant="outline">
               <Plus className="mr-2 h-4 w-4" />
               Add Thai Phrase

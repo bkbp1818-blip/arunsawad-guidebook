@@ -18,11 +18,11 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
 const navItems = [
-  { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/admin/locations", icon: MapPin, label: "Locations" },
-  { href: "/admin/places", icon: Utensils, label: "Places" },
-  { href: "/admin/faqs", icon: HelpCircle, label: "FAQs" },
-  { href: "/admin/phrases", icon: BookOpen, label: "Thai Phrases" },
+  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+  { href: "/dashboard/locations", icon: MapPin, label: "Locations" },
+  { href: "/dashboard/places", icon: Utensils, label: "Places" },
+  { href: "/dashboard/faqs", icon: HelpCircle, label: "FAQs" },
+  { href: "/dashboard/phrases", icon: BookOpen, label: "Thai Phrases" },
 ];
 
 export default function AdminLayout({
@@ -71,7 +71,7 @@ export default function AdminLayout({
         <div className="flex h-full flex-col">
           {/* Logo */}
           <div className="flex h-16 items-center justify-between border-b border-border px-4">
-            <Link href="/admin" className="flex items-center gap-2">
+            <Link href="/dashboard" className="flex items-center gap-2">
               <span className="text-2xl">🐉</span>
               <span className="font-serif text-lg font-semibold">Admin</span>
             </Link>
