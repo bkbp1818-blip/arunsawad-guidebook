@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF } from "@react-google-maps/api";
 import { Coffee, Utensils, Wine, Landmark, ShoppingBag, Bus, Star, Navigation, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -98,22 +98,16 @@ export default function PlacesMap({ places, onPlaceClick }: PlacesMapProps) {
     setMap(null);
   }, []);
 
-  // Calculate bounds to fit all markers
-  const bounds = useMemo(() => {
-    if (!places.length) return null;
-    const bounds = new google.maps.LatLngBounds();
-    places.forEach((place) => {
-      bounds.extend({ lat: place.latitude, lng: place.longitude });
-    });
-    return bounds;
-  }, [places]);
-
-  // Fit bounds when places change
-  useMemo(() => {
-    if (map && bounds) {
+  // Fit bounds when map and places are ready
+  useEffect(() => {
+    if (map && places.length > 0 && isLoaded) {
+      const bounds = new google.maps.LatLngBounds();
+      places.forEach((place) => {
+        bounds.extend({ lat: place.latitude, lng: place.longitude });
+      });
       map.fitBounds(bounds, { top: 50, right: 50, bottom: 50, left: 50 });
     }
-  }, [map, bounds]);
+  }, [map, places, isLoaded]);
 
   const handleMarkerClick = (place: Place) => {
     setSelectedPlace(place);
