@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
-    "postinstall": "prisma generate",
+    "build": "prisma generate || true && next build",
+    "postinstall": "prisma generate || echo 'Prisma generate skipped'",
     "start": "next start",
     "lint": "eslint",
     "db:generate": "prisma generate",
