@@ -1,5 +1,6 @@
 "use client";
 
+// Admin Dashboard - ARUN SA WAD Guidebook
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MapPin, Utensils, HelpCircle, BookOpen, Plus } from "lucide-react";
