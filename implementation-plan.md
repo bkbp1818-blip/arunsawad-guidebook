@@ -89,7 +89,7 @@
 
 ## Production URL
 
-**Live Site:** https://arunsawad-guidebook.vercel.app
+**Live Site:** https://guidebook-gold.vercel.app
 
 ---
 
@@ -97,7 +97,7 @@
 
 ### 2025-12-29
 - Deploy เวอร์ชันล่าสุดขึ้น Vercel
-- ตั้งค่า domain alias เป็น `arunsawad-guidebook.vercel.app`
+- Production URL: `guidebook-gold.vercel.app`
 
 ### 2025-12-15
 - สร้างไฟล์ implementation-plan.md
