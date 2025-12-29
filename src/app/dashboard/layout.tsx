@@ -40,7 +40,7 @@ export default function DashboardLayout({
   const handleSignOut = async () => {
     // Use fetch to sign out
     await fetch("/api/auth/signout", { method: "POST" });
-    window.location.href = "/";
+    window.location.href = "/login";
   };
 
   return (
