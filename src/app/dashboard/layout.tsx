@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import {
   LayoutDashboard,
   MapPin,
@@ -37,10 +38,8 @@ export default function DashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
 
-  const handleSignOut = async () => {
-    // Use fetch to sign out
-    await fetch("/api/auth/signout", { method: "POST" });
-    window.location.href = "/login";
+  const handleSignOut = () => {
+    signOut({ callbackUrl: "/login" });
   };
 
   return (
