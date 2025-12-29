@@ -96,6 +96,10 @@
 ## Update History
 
 ### 2025-12-29
+- เปลี่ยนระบบ login จาก email เป็น username
+- Admin credentials: `admin` / `admin123`
+- แก้ไข Sign Out ให้ redirect ไปหน้า `/login`
+- แก้ไข Login ให้ redirect ไปหน้า `/dashboard`
 - Deploy เวอร์ชันล่าสุดขึ้น Vercel
 - ตั้งค่า domain alias เป็น `arunsawad-guidebook.vercel.app`
 
