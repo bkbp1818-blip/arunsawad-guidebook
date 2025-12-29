@@ -9,16 +9,16 @@ async function main() {
   // Create Admin User
   const hashedPassword = await bcrypt.hash("admin123", 12);
   const admin = await prisma.user.upsert({
-    where: { email: "test@test.com" },
+    where: { username: "admin" },
     update: {},
     create: {
-      email: "test@test.com",
+      username: "admin",
       password: hashedPassword,
       name: "Admin",
       role: Role.SUPER_ADMIN,
     },
   });
-  console.log("✅ Created admin user:", admin.email);
+  console.log("✅ Created admin user:", admin.username);
 
   // Create 3 Locations
   const chinatown = await prisma.location.upsert({

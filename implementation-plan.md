@@ -165,6 +165,6 @@ npm run start
 
 ## Notes
 
-- Admin login: `test@test.com` / `admin123`
+- Admin login: `admin` / `admin123`
 - ใช้ Vercel Blob สำหรับเก็บไฟล์รูปภาพ
 - ไม่ใช้ Row Level Security (RLS)

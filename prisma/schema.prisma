@@ -105,7 +105,7 @@ model ThaiPhrase {
 // Admin User
 model User {
   id        String   @id @default(cuid())
-  email     String   @unique
+  username  String   @unique
   password  String
   name      String
   role      Role     @default(ADMIN)
